@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="is-pulled-left">{{todos.length}} items left</p>
+    <p class="is-pulled-left">{{item}} items left</p>
     <visibility-input/>
   </div>
 </template>
@@ -14,7 +14,18 @@ export default {
     VisibilityInput
   },
   computed: {
-    ...mapGetters(['todos'])
+    ...mapGetters(['visibility', 'todos']),
+    item () {
+      if (this.visibility === 'all'){
+        return this.todos.length
+      }
+      if (this.visibility === 'active'){
+        return this.todos.filter(todo => todo.completed === false).length
+      }
+      if (this.visibility === 'completed'){
+        return this.todos.filter(todo => todo.completed === true).length
+      }
+    }
   }
 }
 </script>
