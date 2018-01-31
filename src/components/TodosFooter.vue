@@ -6,7 +6,7 @@
   </div>
   <div class="columns is-centered">
       <div class="column is-11">
-        <button class="button is-pulled-right " @click="clearCompeleted(index)">Clear Completed</button>
+        <button class="button is-pulled-right " @click="clearCompleted()">Clear Completed</button>
       </div>
     </div>
 </div>
@@ -16,7 +16,7 @@
 
 <script>
 import VisibilityInput from '@/components/VisibilityInput'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -37,7 +37,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['clearCompeleted'])
+    ...mapActions(['clearCompleted'])
   }
 }
 </script>
