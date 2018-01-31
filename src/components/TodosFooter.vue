@@ -1,8 +1,17 @@
 <template>
   <div>
-    <p class="is-pulled-left">{{item}} items left</p>
-    <visibility-input/>
+    <div class="columns">
+          <div class="column ">
+  <p class="is-pulled-left">{{item}} items left</p>
   </div>
+  <div class="columns is-centered">
+      <div class="column is-11">
+        <button class="button is-pulled-right " @click="clearCompeleted(index)">Clear Completed</button>
+      </div>
+    </div>
+</div>
+<visibility-input/>
+</div>
 </template>
 
 <script>
@@ -16,16 +25,19 @@ export default {
   computed: {
     ...mapGetters(['visibility', 'todos']),
     item () {
-      if (this.visibility === 'all'){
+      if (this.visibility === 'all') {
         return this.todos.length
       }
-      if (this.visibility === 'active'){
+      if (this.visibility === 'active') {
         return this.todos.filter(todo => todo.completed === false).length
       }
-      if (this.visibility === 'completed'){
+      if (this.visibility === 'completed') {
         return this.todos.filter(todo => todo.completed === true).length
       }
     }
+  },
+  methods: {
+    ...mapActions(['clearCompeleted'])
   }
 }
 </script>

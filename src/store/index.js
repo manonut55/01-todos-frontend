@@ -24,6 +24,9 @@ export const store = new Vuex.Store({
     },
     COMPLETED_TODO (state, {index, completed}) {
       state.todos[index].completed = completed
+    },
+    CLEAR_COMPELETED_TODO (state, {index, completed}) {
+      state.todos = state.todos.filter(todo => todo.completed === false)
     }
   },
   actions: {
@@ -38,6 +41,10 @@ export const store = new Vuex.Store({
     },
     changeCompleted ({commit}, val) {
       commit('COMPLETED_TODO', val)
+    },
+    clearCompeleted ({commit}, index) {
+      commit('CLEAR_COMPELETED_TODO')
+      dispatch('save')
     }
   },
   getters: {
