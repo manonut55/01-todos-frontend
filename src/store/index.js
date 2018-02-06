@@ -15,15 +15,19 @@ export const store = new Vuex.Store({
         title,
         completed: false
       })
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
     },
     CHANGE_VISIBILITY (state, newVisibilityValue) {
       state.visibility = newVisibilityValue
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
     },
     REMOVE_TODO (state, index) {
       state.todos.splice(index, 1)
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
     },
     COMPLETED_TODO (state, {index, completed}) {
       state.todos[index].completed = completed
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
     },
     CLEARCOMPLETED_TODO (state) {
       for (let i = state.todos.length - 1; i >= 0; i--) {
@@ -31,6 +35,15 @@ export const store = new Vuex.Store({
           state.todos.splice(i, 1)
         }
       }
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
+    },
+    LOCALSTORAGE_TO_SHOW_ON_WEB (state, storagetodata) {
+      state.todos = storagetodata
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
+    },
+    SORT_TO (state, payload) {
+      state.todos.splice(payload.newIndex, 0, state.todos.splice(payload.oldIndex, 1)[0])
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
     }
   },
   actions: {
@@ -48,6 +61,18 @@ export const store = new Vuex.Store({
     },
     clearCompleted ({commit}) {
       commit('CLEARCOMPLETED_TODO')
+    },
+    LocalStorageToShowOnWeb ({commit}) {
+      var storagetodata = localStorage.getItem('datasenter')
+      if (storagetodata != null) {
+        commit('LOCALSTORAGE_TO_SHOW_ON_WEB', JSON.parse(storagetodata))
+      }
+    },
+    sortTo ({commit}, payload) {
+      commit('SORT_TO', payload)
+    },
+    buildLocalStorage ({state}) {
+      localStorage.setItem('datasenter', JSON.stringify(state.todos))
     }
   },
   getters: {

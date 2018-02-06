@@ -19,12 +19,22 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['todos'])
+    ...mapGetters(['todos', 'visibility'])
   },
   methods: {
-    ...mapActions(['removeTodo', 'changeCompleted']),
+    ...mapActions(['removeTodo', 'changeCompleted', 'LocalStorageToShowOnWeb', 'buildLocalStorage']),
     test (index, val) {
       this.changeCompleted({index: index, completed: val})
+    },
+    onUpdate: function (event) {
+      this.sortTo({ newIndex: event.newIndex, oldIndex: event.oldIndex })
+    }
+  },
+  created () {
+    if (localStorage.getItem('datasenter') !== null) {
+      this.LocalStorageToShowOnWeb()
+    } else {
+      this.buildLocalStorage()
     }
   }
 }
